@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 const User = require('../models/user');
 
@@ -12,19 +12,19 @@ exports.createUser = (req, res, next) => {
             });
             user.save()
                 .then(result => {
-                    res.status(201).json({
+                    return res.status(201).json({
                         message: 'User created!',
                         result: result
                     });
                 })
                 .catch(err => {
-                    res.status(500).json({
+                    return res.status(500).json({
                         message: "Invalid authentication credentials"
                     });
                 });
         })
         .catch(err => {
-            res.status(500).json({
+            return res.status(500).json({
                 message: "Invalid authentication credentials"
             });
         });
@@ -53,7 +53,7 @@ exports.userLogin = (req, res, next) => {
                 process.env.JWT_KEY,
                 { expiresIn: "1h" }
             );
-            res.status(200).json({
+            return res.status(200).json({
                 token: token,
                 expiresIn: 3600,
                 userId: fetchedUser._id
