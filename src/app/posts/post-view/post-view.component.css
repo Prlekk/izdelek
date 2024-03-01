@@ -1,0 +1,83 @@
+.post-view {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.post-image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.post-title {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.post-content {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+mat-card-content {
+    margin: 1rem 0;
+}
+
+.ingredients .mat-grid-tile-content {
+    flex-direction: column !important;
+}
+
+
+
+.ingredients {
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally within the tile */
+    border-right: rgba(0, 0, 0, 0.12) solid 1.11667px;
+  }
+  
+.table-container {
+    width: 100%;
+    text-align: center;
+}
+  
+
+/* Style the table header cells */
+.mat-header-cell {
+font-weight: bold; /* Make header text bold */
+border-bottom: 2px solid #ccc; /* Add a bottom border to separate header row */
+}
+
+/* Style the table cells */
+.mat-cell {
+border-bottom: 1px solid #eee; /* Add a bottom border to separate rows */
+padding: 8px; /* Add some padding to the cells */
+}
+
+/* Style even rows differently for better readability */
+.mat-row:nth-child(even) {
+background-color: #f2f2f2; /* Light gray background for even rows */
+}
+  
+.process {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+}
+
+.process-time-and-difficulty {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.process-steps {
+    margin: 1rem;
+}
+
+.step {
+    font-size: 1.2rem;
+}

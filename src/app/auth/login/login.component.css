@@ -1,7 +1,41 @@
+mat-card {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 mat-form-field {
   width: 100%;
 }
 
 mat-spinner {
   margin: auto;
+}
+
+input.mat-input {
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: calc(100% - 20px);
+}
+
+button.mat-raised-button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+mat-error {
+  color: red;
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  mat-card {
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
 }

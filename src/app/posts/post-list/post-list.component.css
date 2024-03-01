@@ -1,25 +1,74 @@
 :host {
-    display: block;
-    margin-top: 1rem;
-  }
-  
-  mat-spinner {
-    margin: auto;
-  }
-  
-  .info-text {
-    text-align: center;
-  }
-  
-  .post-image {
-    width: 100%;
-  }
-  
-  .post-image img {
-    width: 100%;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-  }
-  
-  mat-paginator {
-    margin-top: 1rem;
-  }
+  display: block;
+  margin-top: 1rem;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+.info-text {
+  text-align: center;
+}
+
+mat-paginator {
+  margin-top: 1rem;
+}
+
+mat-toolbar {
+  background: transparent;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.example-card {
+  width: 600px;
+  margin-top: 1.5rem;
+}
+
+.post-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.post-image {
+  max-height: 400px;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+}
+
+.post-image img {
+  width: 100%;
+}
+
+.post-content {
+  font-size: 1.1rem;
+}
+
+mat-card-title::first-letter {
+  text-transform: capitalize;
+}
+
+mat-card-subtitle {
+  margin: 0.5rem 0;
+}
+
+img {
+  cursor: pointer;
+}
+
+mat-card-content {
+  margin-top: 1rem;
+}
+
+button {
+  transition: 175ms all;
+}
+
+button:hover {
+  scale: 1.15;
+}

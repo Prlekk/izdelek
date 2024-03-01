@@ -11,7 +11,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatPaginatorModule } from '@angular/material/paginator'; 
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatGridListModule } from '@angular/material/grid-list';  
+import { MatDividerModule } from '@angular/material/divider'; 
+import { MatTooltipModule } from '@angular/material/tooltip'; 
+import { MatListModule } from '@angular/material/list'; 
+import { MatTableModule } from '@angular/material/table'; 
 
 @NgModule({
     exports: [
@@ -26,7 +32,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatNativeDateModule,
         MatPaginatorModule,
         MatDialogModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatStepperModule,
+        MatGridListModule,
+        MatDividerModule,
+        MatTooltipModule,
+        MatListModule,
+        MatTableModule
     ]
 })
 export class AngularMaterialModule {

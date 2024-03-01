@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 
 import { PostsService } from "../posts.service";
@@ -7,6 +7,7 @@ import { Post } from "../post.model";
 import { mimeType } from "./mime-type.validator";
 import { Subscription } from "rxjs";
 import { AuthService } from "src/app/auth/auth.service";
+import { faArrowLeft, faArrowRight, faCheck, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: "app-post-create",
@@ -14,6 +15,15 @@ import { AuthService } from "src/app/auth/auth.service";
   styleUrls: ["./post-create.component.css"]
 })
 export class PostCreateComponent implements OnInit, OnDestroy {
+  faArrowLeft = faArrowLeft;
+  faArrowRight = faArrowRight;
+  faReset = faRotateLeft;
+  faCheck = faCheck;
+
+  postIntro: FormGroup;
+  postIngredients: FormGroup;
+  postProcess: FormGroup;
+  
   enteredTitle = "";
   enteredContent = "";
   post: Post;
@@ -27,7 +37,8 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   constructor(
     public postsService: PostsService,
     public route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private _formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -36,17 +47,33 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       }
     )
-    this.form = new FormGroup({
-      title: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3)]
-      }),
-      content: new FormControl(null, { 
-        validators: [Validators.required] 
-      }),
-      image: new FormControl(null, {
+    this.postIntro = this._formBuilder.group({
+      title: ['', [Validators.required, Validators.minLength(3)]],
+      image: [null, {
         validators: [Validators.required],
         asyncValidators: [mimeType]
-      })
+      }],
+      content: ['', [Validators.required]]
+    });
+    this.postIngredients = this._formBuilder.group({
+      amountOfPeople: ['', [Validators.required]],
+      ingredients: this._formBuilder.array([
+        this._formBuilder.group({
+          ingredient: ['', [Validators.required]],
+          quantity: ['', [Validators.required]]
+        })
+      ])
+    });
+    
+    this.postProcess = this._formBuilder.group({
+      difficulty: ['', [Validators.required]],
+      timeToPrepare: ['', [Validators.required]],
+      timeToCook: ['', [Validators.required]],
+      steps: this._formBuilder.array([
+        this._formBuilder.group({
+          step: ['', [Validators.required]]
+        })
+      ])
     })
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has("postId")) {
@@ -60,13 +87,25 @@ export class PostCreateComponent implements OnInit, OnDestroy {
             title: postData.title, 
             content: postData.content,
             imagePath: postData.imagePath,
-            creator: postData.creator
+            creator: postData.creator,
+            ingredients: postData.ingredients,
+            process: postData.process
           };
-          this.form.setValue({
+          this.postIntro.patchValue({
             title: this.post.title,
+            image: this.post.imagePath,
             content: this.post.content,
-            image: this.post.imagePath
           });
+          this.postIngredients.patchValue({
+            amountOfPeople: this.post.ingredients.amountOfPeople,
+            ingredients: this.post.ingredients.ingredients
+          });
+          this.postProcess.patchValue({
+            difficulty: this.post.process.difficulty,
+            timeToPrepare: this.post.process.timeToPrepare,
+            timeToCook: this.post.process.timeToCook,
+            steps: this.post.process.steps
+          })
         });
       } else {
         this.mode = "create";
@@ -77,8 +116,8 @@ export class PostCreateComponent implements OnInit, OnDestroy {
 
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.form.patchValue({ 'image': file });
-    this.form.get('image').updateValueAndValidity();
+    this.postIntro.patchValue({ 'image': file });
+    this.postIntro.get('image').updateValueAndValidity();
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = reader.result as string;
@@ -86,25 +125,44 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     reader.readAsDataURL(file);
   }
 
+  checkPostValidity() {
+    return this.postIntro.value.title.invalid 
+        || this.postIntro.value.image.invalid 
+        || this.postIntro.value.content.invalid
+        || this.postIngredients.value.ingredients.invalid
+        || this.postProcess.value.difficulty.invalid
+        || this.postProcess.value.timeToPrepare.invalid
+        || this.postProcess.value.timeToCook.invalid
+        || this.postProcess.value.steps.invalid
+  }
+
   onSavePost() {
-    if (this.form.invalid) {
+    if (this.checkPostValidity()) {
       return;
     }
     this.isLoading = true;
+    console.log(this.mode);
     if (this.mode === "create") {
       this.postsService.addPost(
-        this.form.value.title, 
-        this.form.value.content,
-        this.form.value.image);
+        this.postIntro.value.title, 
+        this.postIntro.value.content,
+        this.postIntro.value.image,
+        this.postIngredients.value,
+        this.postProcess.value);
     } else {
+      console.log("editing post");
       this.postsService.updatePost(
         this.postId,
-        this.form.value.title,
-        this.form.value.content,
-        this.form.value.image
+        this.postIntro.value.title,
+        this.postIntro.value.content,
+        this.postIntro.value.image,
+        this.postIngredients.value,
+        this.postProcess.value
       );
     }
-    this.form.reset();
+    this.postIntro.reset();
+    this.postIngredients.reset();
+    this.postProcess.reset();
   }
 
   ngOnDestroy() {

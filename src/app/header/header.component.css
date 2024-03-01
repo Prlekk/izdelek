@@ -12,4 +12,10 @@ a {
 
 .toolbar-spacer {
     flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.toolbar-spacer span {
+    cursor: pointer;
 }

@@ -1,0 +1,69 @@
+<mat-card class="post-view">
+    <mat-grid-list cols="5">
+        <mat-grid-tile colspan="3" class="post-image" style="background-image: url('{{ post.imagePath }}');">
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2" >
+            <mat-card-title class="post-title">{{ post.title }}</mat-card-title>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <p class="post-content">
+            {{ post.content }}
+        </p>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-grid-list cols="5">
+        <mat-grid-tile colspan="2" class="ingredients">
+            <div class="table-container">
+                <mat-card-title>Sestavine</mat-card-title>
+                <table mat-table [dataSource]="this.ingredients.ingredients">
+                <!-- Column definitions for Ingredient -->
+                <ng-container matColumnDef="ingredient">
+                  <th mat-header-cell *matHeaderCellDef>Sestavina</th>
+                  <td mat-cell *matCellDef="let ingredient">{{ ingredient.ingredient }}</td>
+                </ng-container>
+          
+                <!-- Column definitions for Quantity -->
+                <ng-container matColumnDef="quantity">
+                  <th mat-header-cell *matHeaderCellDef>Koli&ccaron;ina</th>
+                  <td mat-cell *matCellDef="let ingredient">{{ ingredient.quantity }}</td>
+                </ng-container>
+          
+                <!-- Header row definition -->
+                <tr mat-header-row *matHeaderRowDef="['ingredient', 'quantity']"></tr>
+          
+                <!-- Row definition -->
+                <tr mat-row *matRowDef="let row; columns: ['ingredient', 'quantity']"></tr>
+                </table>
+            </div>
+          </mat-grid-tile>          
+        <mat-grid-tile colspan="3">
+            <div class="process">
+                <mat-card-title>Postopek</mat-card-title>
+                <div class="process-time-and-difficulty">
+                    <mat-card-content>
+                        <fa-icon [icon]="faSpoon" *ngIf="process.difficulty === 1" [ngStyle]="{ 'color': process.difficulty === 1 ? 'warn' : 'primary' }"></fa-icon>
+                        <fa-icon [icon]="faSpoon" color="primary"></fa-icon>
+                        <fa-icon [icon]="faSpoon"></fa-icon>
+                    </mat-card-content>
+                    <mat-card-content>
+                        <span>Priprava</span>
+                        <p>{{ this.process.timeToPrepare }} minut</p>
+                    </mat-card-content>
+                    <mat-card-content>
+                        <span>Kuhanje</span>
+                        <p>{{ this.process.timeToCook }} minut</p>
+                    </mat-card-content>
+                </div>
+                <div class="process-steps">
+                    <p class="step" *ngFor="let step of this.process.steps">{{ step.step }}</p>
+                </div>
+            </div>
+        </mat-grid-tile>    
+    </mat-grid-list>
+</mat-card>
+
+<!-- <mat-list-item *ngFor="let ingredient of this.ingredients.ingredients">
+    {{ ingredient.ingredient }}: {{ ingredient.quantity }}
+</mat-list-item> -->

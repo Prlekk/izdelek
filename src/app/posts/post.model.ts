@@ -4,5 +4,21 @@ export interface Post {
     content: string;
     imagePath: string;
     creator: string;
+    ingredients: any;
+    process: any;
   }
   
+export interface Ingredients {
+  amountOfPeople: number;
+  ingredients: {
+    name: string;
+    amount: string;
+  }[];
+}
+
+export interface Process {
+  difficulty: number;
+  timeToPrepare: number;
+  timeToCook: number;
+  steps: string[];
+}

@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { AuthService } from "../auth/auth.service";
 import { Subscription } from "rxjs";
 
+import { faHouse, faPlus, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
@@ -9,6 +11,9 @@ import { Subscription } from "rxjs";
 })
 
 export class HeaderComponent implements OnInit, OnDestroy {
+    faHouse = faHouse;
+    faPlus = faPlus;
+    faLogout = faRightFromBracket;
     userIsAuthenticated = false;
     private authListenerSubs: Subscription;
 

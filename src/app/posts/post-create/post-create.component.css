@@ -19,3 +19,33 @@ input[type="file"] {
 .image-preview img {
   height: 100%;
 }
+
+mat-grid-list {
+  width: 50%;
+}
+
+mat-toolbar {
+  background: transparent;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+mat-divider {
+  margin-bottom: 1.5rem;
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+  padding: 1.8rem;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.title::first-letter {
+  text-transform: uppercase;
+}
