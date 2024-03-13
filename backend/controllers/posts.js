@@ -43,7 +43,8 @@ exports.updatePost = (req, res, next) => {
     imagePath: imagePath,
     creator: req.userData.userId,
     ingredients: req.body.ingredients,
-    process: req.body.process
+    process: req.body.process,
+    likes: req.body.likes
   });
   Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
   .then(result => {

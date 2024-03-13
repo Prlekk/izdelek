@@ -29,7 +29,8 @@ export class PostViewComponent implements OnInit {
                 imagePath: postData.imagePath,
                 creator: postData.creator,
                 ingredients: postData.ingredients,
-                process: postData.process
+                process: postData.process,
+                likes: postData.likes
             };
             this.ingredients = JSON.parse(this.post.ingredients);
             this.process = JSON.parse(this.post.process);

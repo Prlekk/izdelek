@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 
 import { PostsService } from "../posts.service";
@@ -64,16 +64,23 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         })
       ])
     });
+
+    // this.postProcess = this._formBuilder.group({
+    //   difficulty: ['', [Validators.required]],
+    //   timeToPrepare: ['', [Validators.required]],
+    //   timeToCook: ['', [Validators.required]],
+    //   steps: this._formBuilder.array([
+    //     this._formBuilder.group({
+    //       step: ['', [Validators.required]]
+    //     })
+    //   ])
+    // })
     
     this.postProcess = this._formBuilder.group({
       difficulty: ['', [Validators.required]],
       timeToPrepare: ['', [Validators.required]],
       timeToCook: ['', [Validators.required]],
-      steps: this._formBuilder.array([
-        this._formBuilder.group({
-          step: ['', [Validators.required]]
-        })
-      ])
+      steps: this._formBuilder.array([]),
     })
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has("postId")) {
@@ -89,7 +96,8 @@ export class PostCreateComponent implements OnInit, OnDestroy {
             imagePath: postData.imagePath,
             creator: postData.creator,
             ingredients: postData.ingredients,
-            process: postData.process
+            process: postData.process,
+            likes: postData.likes
           };
           this.postIntro.patchValue({
             title: this.post.title,
@@ -136,6 +144,22 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         || this.postProcess.value.steps.invalid
   }
 
+  addStep() {
+    const stepsArray = this.postProcess.get('steps') as FormArray;
+    stepsArray.push(this.createStepFormGroup());
+  }
+
+  createStepFormGroup(): FormGroup {
+    return this._formBuilder.group({
+      step: ['', [Validators.required]]
+    });
+  }
+
+  removeStep(index: number) {
+    const stepsArray = this.postProcess.get('steps') as FormArray;
+    stepsArray.removeAt(index);
+  }
+
   onSavePost() {
     if (this.checkPostValidity()) {
       return;
@@ -157,7 +181,8 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         this.postIntro.value.content,
         this.postIntro.value.image,
         this.postIngredients.value,
-        this.postProcess.value
+        this.postProcess.value,
+        this.post.likes
       );
     }
     this.postIntro.reset();

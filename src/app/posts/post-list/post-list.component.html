@@ -11,8 +11,11 @@
       <p class="post-content">{{ post.content }}</p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-icon-button matTooltip="V&scaron;e&ccaron;kaj Objavo" color="primary" matTooltipPosition="left">
+      <button mat-icon-button matTooltip="V&scaron;e&ccaron;kaj Objavo" color="primary" matTooltipPosition="left" (click)="onLikePost(post)">
         <fa-icon [icon]="faHeart"></fa-icon>
+      </button>
+      <button mat-icon-button matTooltip="Shrani Objavo" color="primary" matTooltipPosition="right">
+        <fa-icon [icon]="faSave"></fa-icon>
       </button>
       <div class="toolbar-spacer"></div>
       <div *ngIf="userIsAuthenticated && userId === post.creator">

@@ -6,7 +6,8 @@ const postSchema = mongoose.Schema({
   imagePath: { type: String, required: true },
   creator: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   ingredients: { type: Object, required: true },
-  process: { type: Object, required: true }
+  process: { type: Object, required: true },
+  likes: { type: Number, default: 0, required: true }
 });
 
 module.exports = mongoose.model("Post", postSchema);

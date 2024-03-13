@@ -49,3 +49,12 @@ mat-divider {
 .title::first-letter {
   text-transform: uppercase;
 }
+
+mat-form-field {
+  margin-top: 0.5rem;
+}
+
+.step-form {
+  display: flex;
+  align-items: center;
+}

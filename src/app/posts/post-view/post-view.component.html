@@ -57,7 +57,10 @@
                     </mat-card-content>
                 </div>
                 <div class="process-steps">
-                    <p class="step" *ngFor="let step of this.process.steps">{{ step.step }}</p>
+                    <div class="step" *ngFor="let step of this.process.steps; let i = index">
+                        <span class="step-number">{{ i + 1 }}</span> 
+                        <p class="step-text">{{ step.step }}</p>
+                    </div>
                 </div>
             </div>
         </mat-grid-tile>    

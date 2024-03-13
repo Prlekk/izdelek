@@ -106,14 +106,18 @@
     <form [formGroup]="postProcess">
       <div formArrayName="steps">
         <div *ngFor="let step of postProcess.get('steps')['controls']; let i = index">
-          <div [formGroupName]="i">
+          <div [formGroupName]="i" class="step-form">
             <mat-form-field>
               <input matInput type="text" formControlName="step" placeholder="{{ i + 1 }}. Korak">
               <mat-error *ngIf="step.get('step').invalid">Vnesite korak(e).</mat-error>
             </mat-form-field>
+            <button mat-icon-button (click)="removeStep(i)" matTooltip="Remove Step" matTooltipPosition="right">
+              <mat-icon>remove</mat-icon>
+            </button>
           </div>
         </div>
-      </div>      
+      </div>
+      <button mat-raised-button color="primary" (click)="addStep()">Add Step</button>   
       <mat-toolbar>
         <button mat-button matStepperPrevious matTooltip="Nazaj" matTooltipPosition="right">
           <fa-icon [icon]="faArrowLeft"></fa-icon>

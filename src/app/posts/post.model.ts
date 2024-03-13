@@ -6,6 +6,7 @@ export interface Post {
     creator: string;
     ingredients: any;
     process: any;
+    likes: number;
   }
   
 export interface Ingredients {

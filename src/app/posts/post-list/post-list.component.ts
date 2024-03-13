@@ -6,7 +6,7 @@ import { PostsService } from "../posts.service";
 import { PageEvent } from "@angular/material/paginator";
 import { AuthService } from "src/app/auth/auth.service";
 
-import { faHeart, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faPen, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { User } from "../user.model";
 
 @Component({
@@ -18,6 +18,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   faPen = faPen;
   faTrash = faTrash;
   faHeart = faHeart;
+  faSave = faPlus;
   // posts = [
   //   { title: "First Post", content: "This is the first post's content" },
   //   { title: "Second Post", content: "This is the second post's content" },
@@ -53,6 +54,11 @@ export class PostListComponent implements OnInit, OnDestroy {
       this.userIsAuthenticated = isAuthenticated;
       this.userId = this.authService.getUserId();
     });
+  }
+
+  onLikePost(post: Post) {
+    this.isLoading = true;
+    console.log(this.postsService.likePost(post));
   }
 
   onChangedPage(pageData: PageEvent) {

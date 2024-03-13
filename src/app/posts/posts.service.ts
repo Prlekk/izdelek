@@ -14,9 +14,7 @@ const BACKEND_URL = environment.apiUrl + "/posts/";
 
 export class PostsService {
   private posts: Post[] = [];
-  private users: User[] = [];
   private postsUpdated = new Subject<{ posts: Post[], postCount: number}>();
-  private usersUpdated = new Subject<{ users: User[], userCount: number}>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -69,7 +67,7 @@ export class PostsService {
   }
 
   getPost(id: string) {
-    return this.http.get<{ _id: string, title: string, content: string, imagePath: string, creator: string, ingredients: Ingredients, process: Process }>(
+    return this.http.get<{ _id: string, title: string, content: string, imagePath: string, creator: string, ingredients: Ingredients, process: Process, likes: number }>(
       BACKEND_URL + id
     );
   }
@@ -81,6 +79,7 @@ export class PostsService {
     postData.append("image", image, title);
     postData.append("ingredients", JSON.stringify(ingredients));
     postData.append("process", JSON.stringify(process));
+    alert(postData);
     this.http
       .post<{ message: string; post: Post }>(
         BACKEND_URL,
@@ -91,7 +90,11 @@ export class PostsService {
       });
   }
 
-  updatePost(id: string, title: string, content: string, image: File | string, ingredients: Ingredients, process: Process) {
+  likePost(p: Post) {
+    return this.posts.find(post => post.id === p.id);
+  }
+
+  updatePost(id: string, title: string, content: string, image: File | string, ingredients: Ingredients, process: Process, likes: number) {
     let postData: Post | FormData;
     if (typeof image === "object") {
       postData = new FormData();
@@ -109,7 +112,8 @@ export class PostsService {
         imagePath: image,
         creator: null,
         ingredients: ingredients,
-        process: process
+        process: process,
+        likes: likes
       };
     }
     this.http

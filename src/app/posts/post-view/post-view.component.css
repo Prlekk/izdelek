@@ -81,3 +81,20 @@ background-color: #f2f2f2; /* Light gray background for even rows */
 .step {
     font-size: 1.2rem;
 }
+
+.step-number {
+    font-weight: bold;
+    margin-right: 0.5rem;
+    background-color: #ccc;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5000px;
+}
+
+.step-text {
+    margin-left: 2rem;
+}
