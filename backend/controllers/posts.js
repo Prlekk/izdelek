@@ -8,10 +8,8 @@ exports.createPost = (req, res, next) => {
     imagePath: url + "/images/" + req.file.filename,
     creator: req.userData.userId,
     ingredients: req.body.ingredients,
-    process: req.body.process
+    process: req.body.process,
   });
-  console.log("ingredients", req.body.ingredients);
-  console.log("process",req.body.process);
   console.log(post);
   post.save().then(createdPost => {
     res.status(201).json({

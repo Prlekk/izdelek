@@ -19,8 +19,27 @@
     line-height: 2rem;
 }
 
+.mat-mdc-card-content:first-child {
+    padding-top: 0 !important;
+}
+
 mat-card-content {
     margin: 1rem 0;
+    color: #4A4A4A;
+}
+
+mat-card-content div {
+    text-align: center;
+}
+
+.process-steps div {
+    text-align: start;
+}
+
+mat-card-title {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #4A4A4A;
 }
 
 .ingredients .mat-grid-tile-content {
@@ -72,6 +91,15 @@ background-color: #f2f2f2; /* Light gray background for even rows */
     display: flex;
     justify-content: space-around;
     width: 100%;
+    margin-top: 1rem;
+}
+
+.process-time {
+    font-size: 1.2rem;
+}
+
+.process-time-number {
+    text-align: center;
 }
 
 .process-steps {
@@ -85,7 +113,8 @@ background-color: #f2f2f2; /* Light gray background for even rows */
 .step-number {
     font-weight: bold;
     margin-right: 0.5rem;
-    background-color: #ccc;
+    background-color: #4A4A4A;
+    color: white;
     height: 30px;
     width: 30px;
     display: flex;

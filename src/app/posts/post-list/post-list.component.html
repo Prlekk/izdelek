@@ -5,7 +5,7 @@
       <mat-card-title>{{ post.title }}</mat-card-title>
     </mat-card-header>
     <div class="post-image">
-      <img mat-card-image src="{{ post.imagePath }}" alt="{{ post.title }}" [routerLink]="['/view', post.id]"matTooltip="View Post" matTooltipPosition="right">
+      <img mat-card-image src="{{ post.imagePath }}" alt="{{ post.title }}" [routerLink]="['/view', post.id]"matTooltip="Oglej objavo" matTooltipPosition="right">
     </div>
     <mat-card-content>
       <p class="post-content">{{ post.content }}</p>
@@ -31,6 +31,5 @@
 </div>
 <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" 
   *ngIf="posts.length > 0">
-
 </mat-paginator>
 <p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">Dodana &scaron;e ni nobena objava!</p>

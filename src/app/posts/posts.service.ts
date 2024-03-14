@@ -32,7 +32,8 @@ export class PostsService {
               imagePath: post.imagePath,
               creator: post.creator,
               ingredients: post.ingredients,
-              process: post.process
+              process: post.process,
+              likes: post.likes
             };
           }), maxPosts: postData.maxPosts};
         })

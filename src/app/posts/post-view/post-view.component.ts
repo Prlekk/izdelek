@@ -3,7 +3,7 @@ import { Ingredients, Post, Process } from "../post.model";
 
 import { PostsService } from "../posts.service";
 import { ActivatedRoute } from "@angular/router";
-import { faSpoon } from "@fortawesome/free-solid-svg-icons";
+import { faClock, faSpoon } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
     selector: "app-post-view",
@@ -12,6 +12,7 @@ import { faSpoon } from "@fortawesome/free-solid-svg-icons";
 })
 export class PostViewComponent implements OnInit {
     faSpoon = faSpoon;
+    faClock = faClock;
 
     post: Post;
     ingredients: Ingredients;
@@ -34,8 +35,6 @@ export class PostViewComponent implements OnInit {
             };
             this.ingredients = JSON.parse(this.post.ingredients);
             this.process = JSON.parse(this.post.process);
-            console.log(typeof this.ingredients, this.ingredients);
-            console.log(typeof this.process, this.process.steps);
         });
     }
 }

@@ -7,7 +7,7 @@ import { Post } from "../post.model";
 import { mimeType } from "./mime-type.validator";
 import { Subscription } from "rxjs";
 import { AuthService } from "src/app/auth/auth.service";
-import { faArrowLeft, faArrowRight, faCheck, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faArrowRight, faCheck, faRotateLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: "app-post-create",
@@ -19,6 +19,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   faArrowRight = faArrowRight;
   faReset = faRotateLeft;
   faCheck = faCheck;
+  faTrash = faTrash;
 
   postIntro: FormGroup;
   postIngredients: FormGroup;
@@ -142,6 +143,23 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         || this.postProcess.value.timeToPrepare.invalid
         || this.postProcess.value.timeToCook.invalid
         || this.postProcess.value.steps.invalid
+  }
+  
+  addIngredient() {
+    const ingredientsArray = this.postIngredients.get('ingredients') as FormArray;
+    ingredientsArray.push(this.createIngredientFormGroup());
+  }
+
+  createIngredientFormGroup(): FormGroup {
+    return this._formBuilder.group({
+      ingredient: ['', [Validators.required]],
+      quantity: ['', [Validators.required]]
+    })
+  }
+
+  removeIngredient(index: number) {
+    const ingredientsArray = this.postIngredients.get('ingredients') as FormArray;
+    ingredientsArray.removeAt(index);
   }
 
   addStep() {

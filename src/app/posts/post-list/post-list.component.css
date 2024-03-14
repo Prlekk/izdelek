@@ -49,6 +49,10 @@ mat-toolbar {
   font-size: 1.1rem;
 }
 
+mat-card {
+  padding: 0.5rem;
+}
+
 mat-card-title::first-letter {
   text-transform: capitalize;
 }
@@ -71,4 +75,8 @@ button {
 
 button:hover {
   scale: 1.15;
+}
+
+mat-paginator {
+  background-color: #F3F3F3;
 }

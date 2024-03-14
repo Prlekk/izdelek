@@ -51,7 +51,7 @@
     <form [formGroup]="postIngredients">
       <div formArrayName="ingredients">
         <div *ngFor="let ingredientGroup of postIngredients.get('ingredients')['controls']; let i = index">
-          <div [formGroupName]="i">
+          <div [formGroupName]="i" class="ingredients-form">
             <mat-form-field>
               <input matInput type="text" formControlName="ingredient" placeholder="Sestavina">
               <mat-error *ngIf="ingredientGroup.get('ingredient').invalid">Vnesite sestavino.</mat-error>
@@ -60,9 +60,13 @@
               <input matInput type="text" formControlName="quantity" placeholder="Koli&ccaron;ina Sestavine">
               <mat-error *ngIf="ingredientGroup.get('quantity').invalid">Vnesite koli&ccaron;ino sestavine.</mat-error>
             </mat-form-field>
+            <button mat-icon-button color="warn" (click)="removeIngredient(i)" matTooltip="Izbri&scaron;i sestavino" matTooltipPosition="right">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
           </div>
         </div>
       </div>
+      <button mat-raised-button color="primary" (click)="addIngredient()">Nova sestavina</button>
       <mat-toolbar>
         <button mat-button matStepperPrevious matTooltip="Nazaj" matTooltipPosition="right">
           <fa-icon [icon]="faArrowLeft"></fa-icon>
@@ -111,13 +115,13 @@
               <input matInput type="text" formControlName="step" placeholder="{{ i + 1 }}. Korak">
               <mat-error *ngIf="step.get('step').invalid">Vnesite korak(e).</mat-error>
             </mat-form-field>
-            <button mat-icon-button (click)="removeStep(i)" matTooltip="Remove Step" matTooltipPosition="right">
-              <mat-icon>remove</mat-icon>
+            <button mat-icon-button color="warn" (click)="removeStep(i)" matTooltip="Remove Step" matTooltipPosition="right">
+              <fa-icon [icon]="faTrash"></fa-icon>
             </button>
           </div>
         </div>
       </div>
-      <button mat-raised-button color="primary" (click)="addStep()">Add Step</button>   
+      <button mat-raised-button color="primary" (click)="addStep()">Nov korak</button>   
       <mat-toolbar>
         <button mat-button matStepperPrevious matTooltip="Nazaj" matTooltipPosition="right">
           <fa-icon [icon]="faArrowLeft"></fa-icon>
