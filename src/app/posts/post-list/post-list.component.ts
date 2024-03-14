@@ -7,7 +7,6 @@ import { PageEvent } from "@angular/material/paginator";
 import { AuthService } from "src/app/auth/auth.service";
 
 import { faHeart, faPen, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { User } from "../user.model";
 
 @Component({
   selector: "app-post-list",

@@ -6,7 +6,6 @@ import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 
 import { Post, Ingredients, Process } from "./post.model";
-import { User } from "./user.model";
 
 const BACKEND_URL = environment.apiUrl + "/posts/";
 
