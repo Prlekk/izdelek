@@ -33,6 +33,7 @@ export class PostViewComponent implements OnInit {
                 process: postData.process,
                 likes: postData.likes
             };
+            console.log(this.post);
             this.ingredients = JSON.parse(this.post.ingredients);
             this.process = JSON.parse(this.post.process);
         });
