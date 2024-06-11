@@ -51,6 +51,11 @@ mat-toolbar {
 
 mat-card {
   padding: 0.5rem;
+  transition: 175ms all;
+}
+
+mat-card:hover {
+  scale: 1.05;
 }
 
 mat-card-title::first-letter {
@@ -78,5 +83,5 @@ button:hover {
 }
 
 mat-paginator {
-  background-color: #F3F3F3;
+  background-color: transparent;
 }
