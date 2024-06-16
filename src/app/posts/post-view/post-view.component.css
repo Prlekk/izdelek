@@ -1,6 +1,13 @@
+#flex {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 2rem;
+}
+
 .post-view {
     max-width: 1000px;
-    margin: auto;
+    display: flex;
+    flex: 1;
 }
 
 .post-image {
@@ -104,6 +111,7 @@ background-color: #f2f2f2; /* Light gray background for even rows */
 
 .process-steps {
     margin: 1rem;
+    margin-top: 0;
 }
 
 .step {
@@ -126,4 +134,40 @@ background-color: #f2f2f2; /* Light gray background for even rows */
 
 .step-text {
     margin-left: 2rem;
+}
+
+.ingredient-row:hover {
+    background-color: #ebebeb;
+}
+
+.ingredient-name {
+    font-size: 1rem;
+}
+
+.ingredient-name-title {
+    font-size: 1.5rem;
+}
+
+@media screen and (max-width: 1500px) {
+    mat-card-title, .ingredient-name-title, .post-title {
+        font-size: 1.5rem;
+    }
+
+    .post-content {
+        font-size: 1rem;
+    }
+
+    .step {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    mat-card-title, .ingredient-name-title, .post-title {
+        font-size: 1.2rem;
+    }
+
+    .ingredient-name {
+        font-size: 0.8rem;
+    }
 }

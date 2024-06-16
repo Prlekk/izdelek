@@ -7,7 +7,28 @@
     <span class="toolbar-spacer" >
         <span routerLink="/">Recepti.si</span>
     </span>
-    <ul>
+    <button class="button" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <fa-icon [icon]="faUser"></fa-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button *ngIf="!userIsAuthenticated" mat-menu-item routerLink="/auth/login" routerLinkActive="mat-accent">
+            <mat-icon>login</mat-icon>
+            <span>Prijava</span>
+        </button>
+        <button *ngIf="!userIsAuthenticated" mat-menu-item routerLink="/auth/signup" routerLinkActive="mat-accent">
+            <mat-icon>person_add</mat-icon>
+            <span>Registracija</span> 
+        </button>
+        <button *ngIf="userIsAuthenticated" mat-menu-item routerLink="/create" routerLinkActive="mat-accent">
+            <mat-icon>add</mat-icon>
+            <span>Nova objava</span>
+        </button>
+        <button *ngIf="userIsAuthenticated" mat-menu-item (click)="onLogout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Odjava</span>
+        </button>
+    </mat-menu>
+    <!-- <ul>
         <li *ngIf="userIsAuthenticated">
             <a mat-button routerLink="/create" routerLinkActive="mat-accent">
                 Nova objava
@@ -26,5 +47,5 @@
                 <fa-icon [icon]="faLogout"></fa-icon>
             </button>
         </li>
-    </ul>
+    </ul> -->
 </mat-toolbar>

@@ -7,7 +7,7 @@ import { Post } from "../post.model";
 import { mimeType } from "./mime-type.validator";
 import { Subscription } from "rxjs";
 import { AuthService } from "src/app/auth/auth.service";
-import { faArrowLeft, faArrowRight, faCheck, faRotateLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faArrowRight, faCheck, faRotateLeft, faTrash, faEye } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: "app-post-create",
@@ -20,6 +20,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   faReset = faRotateLeft;
   faCheck = faCheck;
   faTrash = faTrash;
+  faEye = faEye;
 
   postIntro: FormGroup;
   postIngredients: FormGroup;
@@ -65,18 +66,6 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         })
       ])
     });
-
-    // this.postProcess = this._formBuilder.group({
-    //   difficulty: ['', [Validators.required]],
-    //   timeToPrepare: ['', [Validators.required]],
-    //   timeToCook: ['', [Validators.required]],
-    //   steps: this._formBuilder.array([
-    //     this._formBuilder.group({
-    //       step: ['', [Validators.required]]
-    //     })
-    //   ])
-    // })
-    
     this.postProcess = this._formBuilder.group({
       difficulty: ['', [Validators.required]],
       timeToPrepare: ['', [Validators.required]],
@@ -98,7 +87,9 @@ export class PostCreateComponent implements OnInit, OnDestroy {
             creator: postData.creator,
             ingredients: postData.ingredients,
             process: postData.process,
-            likes: postData.likes
+            likes: postData.likes,
+            date: postData.date,
+            usersLiked: postData.usersLiked
           };
           this.postIntro.patchValue({
             title: this.post.title,
@@ -190,7 +181,9 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         this.postIntro.value.content,
         this.postIntro.value.image,
         this.postIngredients.value,
-        this.postProcess.value);
+        this.postProcess.value,
+        Date.now(),
+      );
     } else {
       console.log("editing post");
       this.postsService.updatePost(
@@ -200,7 +193,9 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         this.postIntro.value.image,
         this.postIngredients.value,
         this.postProcess.value,
-        this.post.likes
+        this.post.likes,
+        Date.now(),
+        this.post.usersLiked
       );
     }
     this.postIntro.reset();

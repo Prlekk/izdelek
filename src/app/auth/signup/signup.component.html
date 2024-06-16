@@ -1,10 +1,7 @@
 <mat-card>
     <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <h1>Registracija</h1>
     <form (submit)="onSignup(signupForm)" #signupForm="ngForm" *ngIf="!isLoading">
-      <mat-form-field>
-        <input matInput name="username" ngModel type="text" placeholder="Uporabni&scaron;ko ime" #usernameInput="ngModel" required>
-        <mat-error *ngIf="usernameInput.invalid">Prosimo vnesite pravilno uporabnis&ccaron;ko ime.</mat-error>
-      </mat-form-field>
       <mat-form-field>
         <input matInput name="email" ngModel type="email" placeholder="E-Naslov" #emailInput="ngModel" required email>
         <mat-error *ngIf="emailInput.invalid">Prosimo vnesite pravilnen E-Naslov.</mat-error>
@@ -13,6 +10,8 @@
         <input matInput name="password" ngModel type="password" placeholder="Geslo" #passwordInput="ngModel" required>
       <mat-error *ngIf="passwordInput.invalid">Prosimo vnesite pravilno geslo.</mat-error>
       </mat-form-field>
-      <button mat-raised-button color="accent" type="submit" *ngIf="!isLoading">Signup</button>
+      <div fxLayoutAlign="end">
+        <button mat-raised-button color="accent" type="submit" *ngIf="!isLoading">Registracija</button>
+      </div>
     </form>
 </mat-card>

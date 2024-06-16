@@ -1,151 +1,155 @@
-<mat-stepper orientation="vertical" linear #stepper>
-  <mat-step>
-    <ng-template matStepLabel>Naslov Objave, Vsebina Objave in Slika</ng-template>
-    <form [formGroup]="postIntro">
-      <mat-form-field>
-        <input matInput type="text" formControlName="title" placeholder="Naslov Objave">
-        <mat-error *ngIf="postIntro.get('title').invalid">Vnesite naslov objave.</mat-error>
-      </mat-form-field>
-      <div>
-        <button mat-stroked-button type="button" (click)="filePicker.click()">Izberite sliko</button>
-        <input type="file" #filePicker (change)="onImagePicked($event)">
-      </div>
-      <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && postIntro.get('image').valid">
-        <img [src]="imagePreview" [alt]="postIntro.value.title">
-      </div>
-      <mat-form-field>
-        <textarea matInput rows="4" formControlName="content" placeholder="Vsebina Objave"></textarea>
-        <mat-error *ngIf="postIntro.get('content').invalid">Vnesite vsebino objave.</mat-error>
-      </mat-form-field>
-      <mat-toolbar>
-        <button mat-button matStepperPrevious matTooltip="Nazaj" matTooltipPosition="right">
-          <fa-icon [icon]="faArrowLeft"></fa-icon>
-        </button>
-        <div class="toolbar-spacer"></div>
-        <button mat-button matStepperNext matTooltip="Naprej" matTooltipPosition="left">
-          <fa-icon [icon]="faArrowRight"></fa-icon>
-        </button>
-      </mat-toolbar>
-    </form>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Sestavine za</ng-template>
-    <form [formGroup]="postIngredients">
-      <mat-form-field>
-        <input matInput type="number" formControlName="amountOfPeople" placeholder="&Scaron;tevilo Ljudi">
-        <mat-error *ngIf="postIngredients.get('amountOfPeople').invalid">Vnesite &scaron;tevilo ljudi.</mat-error>
-      </mat-form-field>
-      <mat-toolbar>
-        <button mat-button matStepperPrevious matTooltip="Nazaj" matTooltipPosition="right">
-          <fa-icon [icon]="faArrowLeft"></fa-icon>
-        </button>
-        <div class="toolbar-spacer"></div>
-        <button mat-button matStepperNext matTooltip="Naprej" matTooltipPosition="left">
-          <fa-icon [icon]="faArrowRight"></fa-icon>
-        </button>
-      </mat-toolbar>
-    </form>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Sestavine</ng-template>
-    <form [formGroup]="postIngredients">
-      <div formArrayName="ingredients">
-        <div *ngFor="let ingredientGroup of postIngredients.get('ingredients')['controls']; let i = index">
-          <div [formGroupName]="i" class="ingredients-form">
-            <mat-form-field>
-              <input matInput type="text" formControlName="ingredient" placeholder="Sestavina">
-              <mat-error *ngIf="ingredientGroup.get('ingredient').invalid">Vnesite sestavino.</mat-error>
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput type="text" formControlName="quantity" placeholder="Koli&ccaron;ina Sestavine">
-              <mat-error *ngIf="ingredientGroup.get('quantity').invalid">Vnesite koli&ccaron;ino sestavine.</mat-error>
-            </mat-form-field>
-            <button mat-icon-button color="warn" (click)="removeIngredient(i)" matTooltip="Izbri&scaron;i sestavino" matTooltipPosition="right">
-              <fa-icon [icon]="faTrash"></fa-icon>
-            </button>
+<div id="flex">
+  <mat-stepper orientation="vertical" linear #stepper>
+    <mat-step>
+      <ng-template matStepLabel>Naslov Objave, Vsebina Objave in Slika</ng-template>
+      <form [formGroup]="postIntro">
+        <mat-form-field>
+          <input matInput type="text" formControlName="title" placeholder="Naslov Objave">
+          <mat-error *ngIf="postIntro.get('title').invalid">Vnesite naslov objave.</mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-stroked-button type="button" (click)="filePicker.click()">Izberite sliko</button>
+          <input type="file" #filePicker (change)="onImagePicked($event)">
+        </div>
+        <mat-form-field>
+          <textarea matInput rows="4" formControlName="content" placeholder="Vsebina Objave"></textarea>
+          <mat-error *ngIf="postIntro.get('content').invalid">Vnesite vsebino objave.</mat-error>
+        </mat-form-field>
+        <mat-toolbar>
+          <button mat-button matStepperPrevious matTooltip="Nazaj" matTooltipPosition="right">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+          </button>
+          <div class="toolbar-spacer"></div>
+          <button mat-button matStepperNext matTooltip="Naprej" matTooltipPosition="left">
+            <fa-icon [icon]="faArrowRight"></fa-icon>
+          </button>
+        </mat-toolbar>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Sestavine za</ng-template>
+      <form [formGroup]="postIngredients">
+        <mat-form-field>
+          <input matInput type="number" formControlName="amountOfPeople" placeholder="&Scaron;tevilo Ljudi">
+          <mat-error *ngIf="postIngredients.get('amountOfPeople').invalid">Vnesite &scaron;tevilo ljudi.</mat-error>
+        </mat-form-field>
+        <mat-toolbar>
+          <button mat-button matStepperPrevious matTooltip="Nazaj" matTooltipPosition="right">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+          </button>
+          <div class="toolbar-spacer"></div>
+          <button mat-button matStepperNext matTooltip="Naprej" matTooltipPosition="left">
+            <fa-icon [icon]="faArrowRight"></fa-icon>
+          </button>
+        </mat-toolbar>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Sestavine</ng-template>
+      <form [formGroup]="postIngredients">
+        <div formArrayName="ingredients">
+          <div *ngFor="let ingredientGroup of postIngredients.get('ingredients')['controls']; let i = index">
+            <div [formGroupName]="i" class="ingredients-form">
+              <mat-form-field>
+                <input matInput type="text" formControlName="ingredient" placeholder="Sestavina">
+                <mat-error *ngIf="ingredientGroup.get('ingredient').invalid">Vnesite sestavino.</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="text" formControlName="quantity" placeholder="Koli&ccaron;ina Sestavine">
+                <mat-error *ngIf="ingredientGroup.get('quantity').invalid">Vnesite koli&ccaron;ino sestavine.</mat-error>
+              </mat-form-field>
+              <button mat-icon-button color="warn" (click)="removeIngredient(i)" matTooltip="Izbri&scaron;i sestavino" matTooltipPosition="right">
+                <fa-icon [icon]="faTrash"></fa-icon>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <button mat-raised-button color="primary" (click)="addIngredient()">Nova sestavina</button>
-      <mat-toolbar>
-        <button mat-button matStepperPrevious matTooltip="Nazaj" matTooltipPosition="right">
-          <fa-icon [icon]="faArrowLeft"></fa-icon>
-        </button>
-        <div class="toolbar-spacer"></div>
-        <button mat-button matStepperNext matTooltip="Naprej" matTooltipPosition="left">
-          <fa-icon [icon]="faArrowRight"></fa-icon>
-        </button>
-      </mat-toolbar>
-    </form>
-    
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>&Ccaron;as priprave</ng-template>
-    <form [formGroup]="postProcess">
-      <mat-form-field>
-        <input matInput type="number" formControlName="difficulty" placeholder="Te&zcaron;avnost Priprave">
-        <mat-error *ngIf="postProcess.get('difficulty').invalid">Vnesite te&zcaron;avnost priprave.</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="number" formControlName="timeToPrepare" placeholder="&Ccaron;as priprave v minutah">
-        <mat-error *ngIf="postProcess.get('timeToPrepare').invalid">Vnesite &ccaron;as priprave v minutah.</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="number" formControlName="timeToCook" placeholder="&Ccaron;as kuhanja v minutah">
-        <mat-error *ngIf="postProcess.get('timeToCook').invalid">Vnesite &ccaron;as kuhanja v minutah.</mat-error>
-      </mat-form-field>
-      <mat-toolbar>
-        <button mat-button matStepperPrevious matTooltip="Nazaj" matTooltipPosition="right">
-          <fa-icon [icon]="faArrowLeft"></fa-icon>
-        </button>
-        <div class="toolbar-spacer"></div>
-        <button mat-button matStepperNext matTooltip="Naprej" matTooltipPosition="left">
-          <fa-icon [icon]="faArrowRight"></fa-icon>
-        </button>
-      </mat-toolbar>
-    </form>
-  </mat-step>  
-  <mat-step>
-    <ng-template matStepLabel>Postopek priprave</ng-template>
-    <form [formGroup]="postProcess">
-      <div formArrayName="steps">
-        <div *ngFor="let step of postProcess.get('steps')['controls']; let i = index">
-          <div [formGroupName]="i" class="step-form">
-            <mat-form-field>
-              <input matInput type="text" formControlName="step" placeholder="{{ i + 1 }}. Korak">
-              <mat-error *ngIf="step.get('step').invalid">Vnesite korak(e).</mat-error>
-            </mat-form-field>
-            <button mat-icon-button color="warn" (click)="removeStep(i)" matTooltip="Remove Step" matTooltipPosition="right">
-              <fa-icon [icon]="faTrash"></fa-icon>
-            </button>
+        <button mat-raised-button color="primary" (click)="addIngredient()">Nova sestavina</button>
+        <mat-toolbar>
+          <button mat-button matStepperPrevious matTooltip="Nazaj" matTooltipPosition="right">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+          </button>
+          <div class="toolbar-spacer"></div>
+          <button mat-button matStepperNext matTooltip="Naprej" matTooltipPosition="left">
+            <fa-icon [icon]="faArrowRight"></fa-icon>
+          </button>
+        </mat-toolbar>
+      </form>
+      
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>&Ccaron;as priprave</ng-template>
+      <form [formGroup]="postProcess">
+        <mat-form-field>
+          <input matInput type="number" formControlName="difficulty" placeholder="Te&zcaron;avnost Priprave">
+          <mat-error *ngIf="postProcess.get('difficulty').invalid">Vnesite te&zcaron;avnost priprave.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="number" formControlName="timeToPrepare" placeholder="&Ccaron;as priprave v minutah">
+          <mat-error *ngIf="postProcess.get('timeToPrepare').invalid">Vnesite &ccaron;as priprave v minutah.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="number" formControlName="timeToCook" placeholder="&Ccaron;as kuhanja v minutah">
+          <mat-error *ngIf="postProcess.get('timeToCook').invalid">Vnesite &ccaron;as kuhanja v minutah.</mat-error>
+        </mat-form-field>
+        <mat-toolbar>
+          <button mat-button matStepperPrevious matTooltip="Nazaj" matTooltipPosition="right">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+          </button>
+          <div class="toolbar-spacer"></div>
+          <button mat-button matStepperNext matTooltip="Naprej" matTooltipPosition="left">
+            <fa-icon [icon]="faArrowRight"></fa-icon>
+          </button>
+        </mat-toolbar>
+      </form>
+    </mat-step>  
+    <mat-step>
+      <ng-template matStepLabel>Postopek priprave</ng-template>
+      <form [formGroup]="postProcess">
+        <div formArrayName="steps">
+          <div *ngFor="let step of postProcess.get('steps')['controls']; let i = index">
+            <div [formGroupName]="i" class="step-form">
+              <mat-form-field>
+                <input matInput type="text" formControlName="step" placeholder="{{ i + 1 }}. Korak">
+                <mat-error *ngIf="step.get('step').invalid">Vnesite korak(e).</mat-error>
+              </mat-form-field>
+              <button mat-icon-button color="warn" (click)="removeStep(i)" matTooltip="Remove Step" matTooltipPosition="right">
+                <fa-icon [icon]="faTrash"></fa-icon>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <button mat-raised-button color="primary" (click)="addStep()">Nov korak</button>   
+        <button mat-raised-button color="primary" (click)="addStep()">Nov korak</button>   
+        <mat-toolbar>
+          <button mat-button matStepperPrevious matTooltip="Nazaj" matTooltipPosition="right">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+          </button>
+          <div class="toolbar-spacer"></div>
+          <button mat-button matStepperNext matTooltip="Naprej" matTooltipPosition="left">
+            <fa-icon [icon]="faArrowRight"></fa-icon>
+          </button>
+        </mat-toolbar>
+      </form>    
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Konec</ng-template>
       <mat-toolbar>
         <button mat-button matStepperPrevious matTooltip="Nazaj" matTooltipPosition="right">
           <fa-icon [icon]="faArrowLeft"></fa-icon>
         </button>
+        <button mat-button (click)="stepper.reset()" matTooltip="Ponastavi" matTooltipPosition="right">
+          <fa-icon [icon]="faReset"></fa-icon >
+        </button>
         <div class="toolbar-spacer"></div>
-        <button mat-button matStepperNext matTooltip="Naprej" matTooltipPosition="left">
-          <fa-icon [icon]="faArrowRight"></fa-icon>
+        <button mat-raised-button color="accent" type="submit" (click)="onSavePost()">
+          <fa-icon [icon]="faCheck"></fa-icon>
         </button>
       </mat-toolbar>
-    </form>    
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Finish</ng-template>
-    <mat-toolbar>
-      <button mat-button matStepperPrevious matTooltip="Nazaj" matTooltipPosition="right">
-        <fa-icon [icon]="faArrowLeft"></fa-icon>
-      </button>
-      <button mat-button (click)="stepper.reset()" matTooltip="Ponastavi" matTooltipPosition="right">
-        <fa-icon [icon]="faReset"></fa-icon >
-      </button>
-      <div class="toolbar-spacer"></div>
-      <button mat-raised-button color="accent" type="submit" (click)="onSavePost()">
-        <fa-icon [icon]="faCheck"></fa-icon>
-      </button>
-    </mat-toolbar>
-  </mat-step>
-</mat-stepper>
+    </mat-step>
+  </mat-stepper>
+  <mat-card>
+    <mat-card-title class="preview-icon"><fa-icon [icon]="faEye"></fa-icon></mat-card-title>
+    <mat-card-title class="preview-title">Predogled slike</mat-card-title>
+    <img class="preview-image" src="{{ imagePreview }}" alt="{{ this.postIntro.get('title').value }}">
+  </mat-card>
+</div>

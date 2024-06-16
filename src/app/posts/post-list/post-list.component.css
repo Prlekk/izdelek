@@ -5,6 +5,7 @@
 
 mat-spinner {
   margin: auto;
+  position: absolute;
 }
 
 .info-text {
@@ -54,10 +55,6 @@ mat-card {
   transition: 175ms all;
 }
 
-mat-card:hover {
-  scale: 1.05;
-}
-
 mat-card-title::first-letter {
   text-transform: capitalize;
 }
@@ -67,6 +64,8 @@ mat-card-subtitle {
 }
 
 img {
+  min-height: 280px;
+  max-height: 280px;
   cursor: pointer;
 }
 
@@ -84,4 +83,25 @@ button:hover {
 
 mat-paginator {
   background-color: transparent;
+}
+
+.save, .like {
+  margin-bottom: -0.25rem;
+  margin-right: -0.25rem;
+}
+
+.creator-likes {
+  color: #303F9F;
+  font-size: 1.5rem;
+  margin-right: 0.25rem;
+}
+
+.mini-heart {
+  position: absolute;
+  left: 25%;
+  /* top: 25%; */
+  transition: 175ms all;
+  z-index: -1;
+  color: red;
+  scale: 0.5;
 }

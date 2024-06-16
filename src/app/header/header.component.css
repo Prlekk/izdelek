@@ -19,3 +19,13 @@ a {
 .toolbar-spacer span {
     cursor: pointer;
 }
+
+.button {
+    transition: 300ms all;
+}
+.button:hover button:focus {
+    scale: 1.1;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(60, 60, 60);
+}

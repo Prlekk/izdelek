@@ -7,22 +7,30 @@ import { PageEvent } from "@angular/material/paginator";
 import { AuthService } from "src/app/auth/auth.service";
 
 import { faHeart, faPen, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { animate, state, style, transition, trigger } from "@angular/animations";
 
 @Component({
   selector: "app-post-list",
   templateUrl: "./post-list.component.html",
-  styleUrls: ["./post-list.component.css"]
+  styleUrls: ["./post-list.component.css"],
+  animations: [
+    trigger('popOverState', [
+      state('show', style({
+        opacity: 1,
+      })),
+      state('hide', style({
+        opacity: 0,
+      })),
+      transition('show => hide', animate('500ms ease-out')),
+      transition('hide => show', animate('500ms ease-in'))
+    ])
+  ]
 })
 export class PostListComponent implements OnInit, OnDestroy {
   faPen = faPen;
   faTrash = faTrash;
   faHeart = faHeart;
   faSave = faPlus;
-  // posts = [
-  //   { title: "First Post", content: "This is the first post's content" },
-  //   { title: "Second Post", content: "This is the second post's content" },
-  //   { title: "Third Post", content: "This is the third post's content" }
-  // ];
   posts: Post[] = [];
   creator: string;
   isLoading = false;
@@ -31,7 +39,9 @@ export class PostListComponent implements OnInit, OnDestroy {
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   userIsAuthenticated = false;
+  userLikedPost = false;
   userId: string;
+  show = false;
   private postsSub: Subscription;
   private authStatusSub: Subscription;
 
@@ -55,9 +65,38 @@ export class PostListComponent implements OnInit, OnDestroy {
     });
   }
 
-  onLikePost(post: Post) {
+  checkLike(post: Post) {
+    return post.usersLiked.includes(this.userId);
+  }
+
+  onToggleLike(post: Post, isLike: boolean) {
+    if (!this.userIsAuthenticated) {
+      return;
+    }
+
     this.isLoading = true;
-    console.log(this.postsService.likePost(post));
+    this.userLikedPost = isLike;
+
+    if (isLike) {
+      this.toggleShow();
+    }
+
+    this.postsService.updateLikes(post.id, this.userId, isLike).subscribe({
+      next: () => {
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.isLoading = false;
+      }
+    });
+  }
+
+  getStateName() {
+    return this.show ? 'show' : 'hide';
+  }
+
+  toggleShow() {
+    this.show = !this.show;
   }
 
   onChangedPage(pageData: PageEvent) {

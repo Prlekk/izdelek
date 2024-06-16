@@ -7,7 +7,10 @@ const postSchema = mongoose.Schema({
   creator: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   ingredients: { type: Object, required: true },
   process: { type: Object, required: true },
-  likes: { type: Number, default: 0, required: true }
+  likes: { type: Number, default: 0, required: true },
+  date: { type: Number, required: true },
+  usersLiked: { type: Array, required: true }
 });
 
 module.exports = mongoose.model("Post", postSchema);
+

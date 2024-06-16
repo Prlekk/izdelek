@@ -4,31 +4,30 @@ const jwt = require("jsonwebtoken");
 const User = require('../models/user');
 
 exports.createUser = (req, res, next) => {
-    bcrypt.hash(req.body.password, 10)
-        .then(hash => {
-            const user = new User({
-                username: req.body.username,
-                email: req.body.email,
-                password: hash
-            });
-            user.save()
-                .then(result => {
-                    return res.status(201).json({
-                        message: 'Uporabnik je bil ustvarjen!',
-                        result: result
-                    });
-                })
-                .catch(err => {
-                    return res.status(500).json({
-                        message: "Elektronski naslov je zaseden!"
-                    });
-                });
+  bcrypt.hash(req.body.password, 10)
+    .then(hash => {
+      const user = new User({
+          email: req.body.email,
+          password: hash
+      });
+      user.save()
+        .then(result => {
+          return res.status(201).json({
+            message: 'Uporabnik je bil ustvarjen!',
+            result: result
+          });
         })
         .catch(err => {
-            return res.status(500).json({
-                message: "Invalid authentication credentials"
-            });
+          return res.status(500).json({
+            message: "Elektronski naslov je zaseden!"
+          });
         });
+    })
+    .catch(err => {
+      return res.status(500).json({
+        message: "Nepravilni podatki za avtentikacijo!"
+      });
+  });
 };
 
 exports.userLogin = (req, res, next) => {
@@ -37,7 +36,7 @@ exports.userLogin = (req, res, next) => {
         .then(user => {
             if (!user) {
                 return res.status(401).json({
-                    message: "Auth failed"
+                    message: "Uporabnik ne obstaja!"
                 });
             }
             fetchedUser = user;
@@ -46,7 +45,7 @@ exports.userLogin = (req, res, next) => {
         .then(result => {
             if (!result) {
                 return res.status(401).json({
-                    message: "Invalid authentication credentials!"
+                    message: "Nepravilni podatki za avtentikacijo!"
                 });
             }
             const token = jwt.sign(
@@ -62,7 +61,7 @@ exports.userLogin = (req, res, next) => {
         })
         .catch(err => {
             return res.status(401).json({
-                message: "Invalid authentication credentials!"
+                message: "Nepravilni podatki za avtentikacijo!"
             });
         });
 };

@@ -31,7 +31,9 @@ export class PostViewComponent implements OnInit {
                 creator: postData.creator,
                 ingredients: postData.ingredients,
                 process: postData.process,
-                likes: postData.likes
+                likes: postData.likes,
+                date: postData.date,
+                usersLiked: postData.usersLiked
             };
             console.log(this.post);
             this.ingredients = JSON.parse(this.post.ingredients);

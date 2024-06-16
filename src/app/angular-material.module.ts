@@ -17,7 +17,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider'; 
 import { MatTooltipModule } from '@angular/material/tooltip'; 
 import { MatListModule } from '@angular/material/list'; 
-import { MatTableModule } from '@angular/material/table'; 
+import { MatTableModule } from '@angular/material/table';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
     exports: [
@@ -38,7 +40,9 @@ import { MatTableModule } from '@angular/material/table';
         MatDividerModule,
         MatTooltipModule,
         MatListModule,
-        MatTableModule
+        MatTableModule,
+        MatMenuModule,
+        MatBadgeModule
     ]
 })
 export class AngularMaterialModule {

@@ -11,12 +11,25 @@
       <p class="post-content">{{ post.content }}</p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-icon-button matTooltip="V&scaron;e&ccaron;kaj Objavo" color="primary" matTooltipPosition="left" (click)="onLikePost(post)">
-        <fa-icon [icon]="faHeart"></fa-icon>
-      </button>
-      <button mat-icon-button matTooltip="Shrani Objavo" color="primary" matTooltipPosition="right">
-        <fa-icon [icon]="faSave"></fa-icon>
-      </button>
+      <div *ngIf="userIsAuthenticated && userId === post.creator" matBadge="{{ post.likes }}" matBadgePosition="after below" matBadgeColor="accent">
+        <fa-icon class="creator-likes" color="primary" [icon]="faHeart"></fa-icon>
+      </div>
+      <div *ngIf="userIsAuthenticated && userId !== post.creator" matBadge="{{ post.likes }}" matBadgePosition="after below" matBadgeColor="accent">
+        <button *ngIf="!checkLike(post) && !checkLike(post)" class="like" mat-icon-button color="primary" (click)="onToggleLike(post, true)">
+          <fa-icon [icon]="faHeart"></fa-icon>
+          <!-- <div [@popOverState]="stateName">
+            <fa-icon class="mini-heart" [icon]="faHeart" color="warn"></fa-icon>
+            <fa-icon class="mini-heart" [icon]="faHeart" color="warn"></fa-icon>
+            <fa-icon class="mini-heart" [icon]="faHeart" color="warn"></fa-icon>
+          </div> -->
+        </button>
+        <button *ngIf="checkLike(post)" class="like" mat-icon-button color="warn" (click)="onToggleLike(post, false)">
+          <fa-icon [icon]="faHeart"></fa-icon>
+        </button>
+      </div>
+      <div *ngIf="!userIsAuthenticated" matBadge="{{ post.likes }}" matBadgePosition="after below" matBadgeColor="accent">
+        <fa-icon class="creator-likes" color="primary" [icon]="faHeart"></fa-icon>
+      </div>
       <div class="toolbar-spacer"></div>
       <div *ngIf="userIsAuthenticated && userId === post.creator">
         <button mat-icon-button color="primary" [routerLink]="['/edit', post.id]" matTooltip="Uredi Objavo" matTooltipPosition="left">
@@ -33,3 +46,18 @@
   *ngIf="posts.length > 0">
 </mat-paginator>
 <p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">Dodana &scaron;e ni nobena objava!</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

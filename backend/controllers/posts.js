@@ -9,8 +9,11 @@ exports.createPost = (req, res, next) => {
     creator: req.userData.userId,
     ingredients: req.body.ingredients,
     process: req.body.process,
+    date: req.body.date,
+    likes: req.body.likes,
+    usersLiked: req.body.usersLiked
   });
-  console.log(post);
+  console.log(post.toString());
   post.save().then(createdPost => {
     res.status(201).json({
       message: "Post added successfully",
@@ -34,6 +37,7 @@ exports.updatePost = (req, res, next) => {
     const url = req.protocol + "://" + req.get("host");
     imagePath = url + "/images/" + req.file.filename
   }
+
   const post = new Post({
     _id: req.body.id,
     title: req.body.title,
@@ -42,9 +46,45 @@ exports.updatePost = (req, res, next) => {
     creator: req.userData.userId,
     ingredients: req.body.ingredients,
     process: req.body.process,
-    likes: req.body.likes
+    likes: req.body.likes,
+    date: req.body.date,
+    usersLiked: req.body.usersLiked
   });
-  Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
+  Post.updateOne({ _id: req.params.id }, post)
+  .then(result => {
+    if(result.matchedCount > 0) {
+      res.status(200).json({ message: "Update successful!" });
+    }else {
+      res.status(401).json({ message: "Not auhtorized!" });
+    }
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: "Couldn't update post!"
+    });
+  });
+}
+
+exports.likePost = (req, res, next) => {
+  let imagePath = req.body.imagePath;
+  if (req.file) {
+    const url = req.protocol + "://" + req.get("host");
+    imagePath = url + "/images/" + req.file.filename
+  }
+
+  const post = new Post({
+    _id: req.body.id,
+    title: req.body.title,
+    content: req.body.content,
+    imagePath: imagePath,
+    creator: req.body.creator,
+    ingredients: req.body.ingredients,
+    process: req.body.process,
+    likes: req.body.likes,
+    date: req.body.date,
+    usersLiked: req.body.usersLiked
+  });
+  Post.updateOne({ _id: req.params.id }, post)
   .then(result => {
     if(result.matchedCount > 0) {
       res.status(200).json({ message: "Update successful!" });
@@ -62,7 +102,7 @@ exports.updatePost = (req, res, next) => {
 exports.getPosts = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const postQuery = Post.find();
+    const postQuery = Post.find().sort({ date: 'desc' });
     let fetchedPosts;
     if (pageSize && currentPage) {
       postQuery

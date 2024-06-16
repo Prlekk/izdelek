@@ -7,6 +7,8 @@ export interface Post {
     ingredients: any;
     process: any;
     likes: number;
+    date: number;
+    usersLiked: string[];
   }
   
 export interface Ingredients {

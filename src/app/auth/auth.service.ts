@@ -33,8 +33,8 @@ export class AuthService {
         return this.authStatusListener.asObservable();
     }
 
-    createUser(username: string, email: string, password: string) {
-        const authData: AuthData = { username: username, email: email, password: password };
+    createUser(email: string, password: string) {
+        const authData: AuthData = { email: email, password: password };
         return this.http.post(BACKEND_URL + "/signup", authData)
             .subscribe(() => {
                 this.router.navigate(["/"]);
@@ -43,8 +43,8 @@ export class AuthService {
             });
     }   
 
-    login(username: string, email: string, password: string) {
-        const authData: AuthData = { username: username, email: email, password: password };
+    login(email: string, password: string) {
+        const authData: AuthData = { email: email, password: password };
         this.http.post<{ token: string, expiresIn: number, userId: string }>(BACKEND_URL + "/login", authData)
             .subscribe(response => {
                 const token = response.token;
@@ -57,7 +57,6 @@ export class AuthService {
                     this.authStatusListener.next(true);
                     const now = new Date();
                     const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-                    console.log(expirationDate),
                     this.saveAuthData(token, expirationDate, this.userId);
                     this.router.navigate(["/"]);
                 }
@@ -93,7 +92,6 @@ export class AuthService {
     }
 
     private setAuthTimer(duration: number) {
-        console.log("Setting timer: " + duration);
         this.tokenTimer = setTimeout(() => {
             this.logout();
         }, duration * 1000)
